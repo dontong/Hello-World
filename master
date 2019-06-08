@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>押下されたbuttonのID取得例</title>
+  <meta charset="utf-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+</head>
+<body>
+  <input id="1" type="button" class="taskUnlockBtn" data-tasknumber="111" value="UNLOCK"/>
+  <input id="2" type="button" class="taskUnlockBtn" data-tasknumber="222" value="UNLOCK" />
+  <input id="3" type="button" class="taskUnlockBtn" data-tasknumber="333" value="UNLOCK" />
+</body>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  $('.taskUnlockBtn').on('click', function () {
+    alert("id = " + this.id );
+    console.log(this.dataset.tasknumber);
+  });
+})
+</script>
+</html>
