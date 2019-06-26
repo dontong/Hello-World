@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>autocomplete</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="dist/autocomplete.js"></script>
+</head>
+<style>
+    body {
+        padding: 10px;
+        padding-top: 50px;
+    }
+</style>
+<body>
+<div class="row">
+    <div class="col-md-2">
+        <input type="text" placeholder="キーワード" class="lookup"/>
+        <input type="hidden" id="hidden-field"/>
+    </div>
+
+    <script type="application/javascript">
+
+        const filter = function (input, data) {
+            return data.filter(x => {
+                return (!x.ignore && ~x.name.indexOf(input)) || x.name === input
+            });
+        };
+
+        const validation = function (inputValue, data) {
+            if (inputValue) {
+
+                let matches = data.filter(x => x.id === +this.selected.value && x.name === inputValue);
+                if (!matches || !matches.length) {
+                    //alert('選択候補がありません' + inputValue);
+                    return false;
+                }
+                return true;
+            }
+        };
+
+        var dataSource2 = [];
+        for (var i = 0; i < 160; i++) {
+            dataSource2.push({value: i, name: '野村' + i});
+        }
+
+        var dataSource = [{
+            "id": 1,
+            "name": '日本語',
+            "ignore": false
+            },
+            {
+                "id": 2,
+                "name": '日本語テスト',
+                "ignore": false
+            },
+            {
+                "id": 3,
+                "name": 'テスト',
+                "ignore": false
+            },
+            {
+                "id": 4,
+                "name": 'サンプル',
+                "ignore": false
+            },
+            {
+                "id": 5,
+                "name": 'テステス',
+                "ignore": false
+            },
+            {
+                "id": 6,
+                "name": '日本',
+                "ignore": true
+            }
+        ];
+
+        $('.lookup').autocomplete({
+            validation,
+            filter,
+            appendToBody: false,
+            openOnInput: true,
+            valueProperty: 'id',
+            nameProperty: 'name',
+            valueField: '#hidden-field',
+            dataSource: dataSource
+        });
+    </script>
+</div>
+</body>
+</html>
